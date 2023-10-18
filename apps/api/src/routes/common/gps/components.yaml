@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: GPS API
+  version: 1.0.0
+# paths:
+#   /gps-devices:
+#     get:
+#       summary: Get a list of GPS devices
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 type: array
+#                 items:
+#                   $ref: '#/components/schemas/GPS'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+#   /gps-devices/{deviceId}:
+#     get:
+#       summary: Get GPS device by ID
+#       parameters:
+#         - in: path
+#           name: deviceId
+#           required: true
+#           schema:
+#             type: string
+#           description: ID of the GPS device
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/GPS'
+#         '404':
+#           $ref: '#/components/responses/NotFound'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    GPS:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The GPS device ID
+        device_name:
+          type: string
+          description: The name of the GPS device
+        device_id:
+          type: string
+          description: The device ID
+        status:
+          type: string
+          description: The status of the GPS device
+        images:
+          type: array
+          items:
+            type: string
+          description: Images related to the GPS device
+        battery:
+          type: number
+          description: Battery percentage of the GPS device
+        last_updated:
+          type: string
+          format: date-time
+          description: Last updated timestamp of the GPS device
+        company:
+          type: object
+          properties:
+            license_type:
+              type: string
+              description: License type of the company
+            name:
+              type: string
+              description: Company name
+            id:
+              type: string
+              description: The company ID
+      required:
+        - _id
+        - device_id
+        - status
+        - images
+        - battery
+        - company
+      example:
+        _id: 63550a26d2597d9e5101a5af
+        device_name: GPS-001
+        device_id: GPS123
+        status: active
+        images:
+          - https://example.com/image1.jpg
+          - https://example.com/image2.jpg
+        battery: 75
+        last_updated: "2023-09-01T08:00:00Z"
+        company:
+          license_type: Standard
+          name: Example Company
+          id: 63550a26d2597d9e5101a5bf
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 400
+            message: Bad request
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 500
+            message: Internal server error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

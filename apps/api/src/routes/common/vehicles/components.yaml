@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: Vehicle API
+  version: 1.0.0
+# paths:
+#   /vehicles:
+#     get:
+#       summary: Get a list of vehicles
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 type: array
+#                 items:
+#                   $ref: '#/components/schemas/Vehicle'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+#   /vehicles/{vehicleId}:
+#     get:
+#       summary: Get vehicle by ID
+#       parameters:
+#         - in: path
+#           name: vehicleId
+#           required: true
+#           schema:
+#             type: string
+#           description: ID of the vehicle
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/Vehicle'
+#         '404':
+#           $ref: '#/components/responses/NotFound'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The vehicle ID
+        manufacture_year:
+          type: number
+          description: Year of manufacture
+        make:
+          type: string
+          description: Make of the vehicle
+        model:
+          type: string
+          description: Model of the vehicle
+        license_number:
+          type: string
+          description: License number of the vehicle
+        images:
+          type: array
+          items:
+            type: string
+          description: Images related to the vehicle
+        company:
+          type: object
+          properties:
+            license_type:
+              type: string
+              description: License type of the company
+            name:
+              type: string
+              description: Company name
+            id:
+              type: string
+              description: The company ID
+      required:
+        - _id
+        - make
+        - model
+        - license_number
+        - company
+      example:
+        _id: 63550a26d2597d9e5101a5af
+        manufacture_year: 2021
+        make: Ford
+        model: Explorer
+        license_number: ABC123
+        images:
+          - https://example.com/image1.jpg
+          - https://example.com/image2.jpg
+        company:
+          license_type: Standard
+          name: Example Company
+          id: 63550a26d2597d9e5101a5bf
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 400
+            message: Bad request
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 500
+            message: Internal server error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

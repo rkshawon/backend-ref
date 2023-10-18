@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      body{
+        background: #ccc;
+      }
+      h1 {
+        color: black;
+        margin: 10px 0px 0px 0px;
+        font-weight: 400;
+        font-size: 18px;
+      }
+      h2 {
+        font-weight: 400;
+        color: black;
+        margin-bottom: 25px;
+        font-size: 12px;
+      }
+      h3 {
+        font-weight: 600;
+        color: black;
+        margin-bottom: 20px;
+        font-size: 14px;
+      }
+      h4 {
+        font-weight: 600;
+        color: black;
+        font-size: 12px;
+        margin: 0;
+      }
+      h5 {
+        font-weight: 400;
+        color: #222;
+        font-size: 12px;
+        margin-top: 30px;
+        margin-bottom: 0px;
+      }
+      h6 {
+        font-weight: 600;
+        color: #222;
+        font-size: 12px;
+        margin-top: 30px;
+        margin-bottom: 0px;
+      }
+      p {
+        font-size: 12px;
+        color: #222;
+        margin: 0;
+      }
+      .regards {
+        margin-top: 5px;
+        color: #222;
+        font-size: 12px;
+      }
+      small {
+        margin: 0;
+      }
+      img {
+        object-fit: cover;
+        background-size: cover;
+      }
+      .template {
+        padding: 20px;
+        display: block;
+        margin: 0 auto;
+        background: white;
+        max-width: 500px;
+        display: block;
+        height: auto;
+        font-family: "Roboto", sans-serif;
+      }
+      .email {
+        color: lightgoldenrodyellow !important;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 10px 12px;
+        background-color: black;
+        border-radius: 25px;
+        font-weight: bold;
+        text-align: center;
+      }
+      .contentFlexbox {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .flexboxInside {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .businessImg {
+        background-size: "cover";
+      }
+      .business {
+        display: flex;
+        justify-content: center;
+      }
+      .verify {
+        text-align: center;
+        margin: 50px 0px;
+      }
+      .reach {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+        background-color: rgb(228, 226, 226);
+        border-radius: 10px;
+        text-align: center;
+      }
+      .reachout {
+        color: black !important;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .floatRight {
+        float: right;
+      }
+      .floatLeft {
+        float: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="template">
+      <div class="business">
+        <img
+          class="businessImg"
+          src="https://i.ibb.co/CnG34J1/cnlg.png"
+          alt="brand-logo"
+        />
+      </div>
+      <h1>Hi Rasmus Christiansen,</h1>
+      <h2>
+        A new company registered into our portal. Please check the company
+        details
+      </h2>
+      <div>
+        <h3>{{business_name}}</h3>
+
+        <table width="100%" border="0">
+          <tr>
+            <th style="text-align: left">Business Name</th>
+            <td>{{business_name}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">Contact Email</th>
+            <td>{{contact_email}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">Contact Name</th>
+            <td>{{contact_name}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">Contact Number</th>
+            <td>{{contact_number}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">City</th>
+            <td>{{city}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">Country</th>
+            <td>{{country}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">Address</th>
+            <td>{{address.street}}, {{address.state}}, {{address.zip}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">ZIP Code</th>
+            <td>{{address.zip}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">DBA</th>
+            <td>{{dba}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">License Number</th>
+            <td>{{license_number}}</td>
+          </tr>
+          <tr>
+            <th style="text-align: left">Role</th>
+            <td>{{role}}</td>
+          </tr>
+        </table>
+
+        {{!--
+        <div>
+          <div class="flexboxInside">
+            <h4>Business Name</h4>
+            <p class="floating">{{business_name}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>Contact Email</h4>
+            <p>{{contact_email}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>Contact Name</h4>
+            <p>{{contact_name}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>Contact Number</h4>
+            <p>{{contact_number}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>City</h4>
+            <p>{{city}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>Country</h4>
+            <p>{{countrty}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>Address</h4>
+            <p>{{address}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>ZIP Code</h4>
+            <p>{{zip}}</p>
+          </div>
+          <div class="flexboxInside">
+            <h4>DBA</h4>
+            <p>{{dba}}</p>
+          </div>
+
+          <div class="flexboxInside">
+            <h4>License Number</h4>
+            <p>{{license_number}}</p>
+          </div>
+
+          <div class="flexboxInside">
+            <h4>Role</h4>
+            <p>{{role}}</p>
+          </div>
+        </div>
+        --}}
+      </div>
+
+      <div class="footer">
+        <h5>
+          To approve them in our portal. Please active their account from admin
+          portal
+        </h5>
+        <div>
+          <h5>Best Regards</h5>
+          <h6 class="regards">Cannabis Connecter Team</h6>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

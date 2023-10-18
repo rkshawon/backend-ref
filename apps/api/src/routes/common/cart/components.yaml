@@ -1,0 +1,85 @@
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        product_list:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: string
+                description: The product ID and the id should be the mongoose id
+                example: 63550a26d2597d9e5101a5af
+              title:
+                type: string
+                description: Product Title
+                example: Bluetooth
+              price:
+                type: number
+                description: Product Price
+                example: 670
+              quantity:
+                type: number
+                description: Product Quantity
+                example: 34
+              unit:
+                type: string
+                description: Product Unit
+                example: lbs
+              img:
+                type: string
+                description: Product Image
+                example: https://images/img.png
+        users:
+          type: string
+          description: The user ID and the id should be a mongoose id.
+          example: 63550a26d2597d9e5101a5af
+        companies:
+          type: string
+          description: The company ID and the id should be a mongoose id.
+          example: 63550a26d2597d9e5101a5af
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Not found
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

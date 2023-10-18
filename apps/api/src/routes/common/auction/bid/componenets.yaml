@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: Bid API
+  version: 1.0.0
+# paths:
+#   /bids:
+#     get:
+#       summary: Get a list of bids
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 type: array
+#                 items:
+#                   $ref: '#/components/schemas/Bid'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+#     post:
+#       summary: Create a new bid
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               $ref: '#/components/schemas/Bid'
+#       responses:
+#         '201':
+#           description: Bid created successfully
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/Bid'
+#         '400':
+#           $ref: '#/components/responses/BadRequest'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+#   /bids/{bidId}:
+#     get:
+#       summary: Get bid by ID
+#       parameters:
+#         - in: path
+#           name: bidId
+#           required: true
+#           schema:
+#             type: string
+#           description: ID of the bid
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/Bid'
+#         '404':
+#           $ref: '#/components/responses/NotFound'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    Bid:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The bid ID
+        auction:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The auction ID
+        bid_amount:
+          type: number
+          description: Bid amount
+        company:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The company ID
+            name:
+              type: string
+              description: Company name
+        createdAt:
+          type: string
+          format: date-time
+          description: Bid creation date and time
+        updatedAt:
+          type: string
+          format: date-time
+          description: Bid last update date and time
+      required:
+        - _id
+        - auction
+        - bid_amount
+        - company
+        - createdAt
+        - updatedAt
+      example:
+        _id: 63550a26d2597d9e5101a5bf
+        auction:
+          _id: 63550a26d2597d9e5101a5af
+        bid_amount: 150
+        company:
+          _id: 63550a26d2597d9e5101a5cf
+          name: Example Company
+        createdAt: "2023-09-01T12:00:00Z"
+        updatedAt: "2023-09-01T12:15:00Z"
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 400
+            message: Bad request
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 500
+            message: Internal server error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

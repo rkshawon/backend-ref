@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: Delivery Schedule API
+  version: 1.0.0
+# paths:
+#   /delivery-schedules:
+#     get:
+#       summary: Get a list of delivery schedules
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 type: array
+#                 items:
+#                   $ref: '#/components/schemas/DeliverySchedule'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+#     post:
+#       summary: Create a new delivery schedule
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               $ref: '#/components/schemas/DeliveryScheduleInput'
+#       responses:
+#         '201':
+#           description: Delivery schedule created successfully
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/DeliverySchedule'
+#         '400':
+#           $ref: '#/components/responses/BadRequest'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+#   /delivery-schedules/{scheduleId}:
+#     get:
+#       summary: Get delivery schedule by ID
+#       parameters:
+#         - in: path
+#           name: scheduleId
+#           required: true
+#           schema:
+#             type: string
+#           description: ID of the delivery schedule
+#       responses:
+#         '200':
+#           description: Successful response
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/DeliverySchedule'
+#         '404':
+#           $ref: '#/components/responses/NotFound'
+#         '500':
+#           $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    DeliverySchedule:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The delivery schedule ID
+        date:
+          type: string
+          format: date-time
+          description: Date of the delivery schedule
+        driver:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The driver ID
+            name:
+              type: string
+              description: Driver's name
+        vehicle:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The vehicle ID
+            name:
+              type: string
+              description: Vehicle name
+        gps:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The GPS ID
+            name:
+              type: string
+              description: GPS device name
+        company:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: The company ID
+            name:
+              type: string
+              description: Company name
+        metrc_status:
+          type: string
+          enum: ["pending", "approved", "rejected"]
+          description: Metrc status of the delivery schedule
+        isTripStarted:
+          type: boolean
+          description: Indicates if the trip is started
+        isScheduled:
+          type: boolean
+          description: Indicates if the delivery is scheduled
+        orders:
+          type: array
+          items:
+            type: object
+            properties:
+              order_id:
+                type: string
+                description: The order ID
+              order_number:
+                type: string
+                description: Order number
+              arrival_time:
+                type: string
+                description: Arrival time
+              departure_time:
+                type: string
+                description: Departure time
+              planned_routes:
+                type: object
+                description: Planned routes information
+              delivery_status:
+                type: string
+                enum: ["pending", "marked_as_delivered", "delivered"]
+                description: Delivery status
+      required:
+        - _id
+        - date
+        - driver
+        - company
+      example:
+        _id: 63550a26d2597d9e5101a5af
+        date: "2023-09-01T10:00:00Z"
+        driver:
+          _id: 63550a26d2597d9e5101a5bf
+          name: John Doe
+        vehicle:
+          _id: 63550a26d2597d9e5101a5cf
+          name: Delivery Van
+        gps:
+          _id: 63550a26d2597d9e5101a5df
+          name: GPS Device
+        company:
+          _id: 63550a26d2597d9e5101a5ef
+          name: Example Company
+        metrc_status: pending
+        isTripStarted: false
+        isScheduled: true
+        orders:
+          - order_id: 63550a26d2597d9e5101a5ff
+            order_number: ORD123
+            arrival_time: "09:30 AM"
+            departure_time: "10:00 AM"
+            planned_routes: {}
+            delivery_status: pending
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 404
+            message: Not found
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 400
+            message: Bad request
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            code: 500
+            message: Internal server error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
